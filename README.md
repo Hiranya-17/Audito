@@ -15,7 +15,6 @@
 #### How to run the website locally
 - Install Node.js: https://nodejs.org/
 - Check it worked with `node -v` & `npm -v` in the terminal
-- In VSCode run `npm install` for dependencies
 - Enter `npm run dev` in the terminal
 - A link should output similar to http://localhost:5173/
 - Copy the link into the browser to see website
