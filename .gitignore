@@ -24,3 +24,6 @@ dist-ssr
 *.sw?
 node_modules
 venv
+# Secrets (MongoDB connection string)
+.env
+__pycache__
