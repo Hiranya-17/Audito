@@ -15,6 +15,7 @@
 #### How to run the website locally
 - Install Node.js: https://nodejs.org/
 - Check it worked with `node -v` & `npm -v` in the terminal
+- Enter `npm install` in the terminal (first time, and whenever package.json changes)
 - Enter `npm run dev` in the terminal
 - A link should output similar to http://localhost:5173/
 - Copy the link into the browser to see website
@@ -29,4 +30,4 @@
 - Django
 
 #### Database
-- MongoDB
+-MongoDB (setup: see [database/README.md](database/README.md))
