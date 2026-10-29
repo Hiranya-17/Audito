@@ -22,11 +22,11 @@
 ### Tech Stack
 
 #### Frontend
--React (for structure and logic)
--Tailwind CSS (for styling
+- React (for structure and logic)
+- Tailwind CSS (for styling)
 
 #### Backend
--Django
+- Django
 
 #### Database
--MongoDB
+- MongoDB
