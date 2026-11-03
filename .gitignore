@@ -23,7 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 node_modules
-venv
+.venv
+
 # Secrets (MongoDB connection string)
 .env
 __pycache__
