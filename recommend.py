@@ -2,34 +2,85 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
-songs = pd.read_csv('songs.csv', usecols=['track_id', 'track_name', 'artists', 'album_name','track_genre', 'popularity'] + features)
+info = ['track_id', 'track_name', 'artists', 'album_name', 'track_genre', 'popularity']
 
-# choose popular songs
-songs = songs.sort_values('popularity', ascending=False)
-songs = songs.drop_duplicates(subset=['track_name', 'artists'])
+all_songs = pd.read_csv('songs.csv', usecols=info + features)
 
-# known songs
-songs = songs[songs['popularity'] >= 50].reset_index(drop=True)
+# fit on every row so any track_id can be looked up
+scaler = MinMaxScaler().fit(all_songs[features])
 
-# scale every feature for equal weighting
-X = MinMaxScaler().fit_transform(songs[features])
+# Pool of songs that can be returned 
+pool = all_songs.sort_values('popularity', ascending=False)
+pool = pool.drop_duplicates(subset=['track_name', 'artists']).reset_index(drop=True)
+X = scaler.transform(pool[features])
 
-# pick a random popular song
-given_idx = songs[songs['popularity'] >= 70].sample(1).index[0]
-given_song = songs.loc[given_idx]
 
-print('Given song:', given_song['track_name'], '-', given_song['artists'] + "\n" + f"{given_song['track_genre']}")
-print(given_song[features].to_string())
+def recommend(track_id=None, artist=None, genre=None, n=5, min_popularity=None, **targets):
+    if min_popularity is None:
+        min_popularity = 0 if artist else 50
 
-# smaller = more similar
-songs['distance'] = ((X - X[given_idx]) ** 2).sum(axis=1) ** 0.5
+    candidates = pool['popularity'] >= min_popularity   # which pool songs are allowed
+    exclude_artists = set()
+    target = None                          
+    cols = list(range(len(features)))         # which features to compare 
 
-# remove songs sharing any artist
-given_artists = set(given_song['artists'].split(';'))
-exploded = songs['artists'].str.split(';').explode()
-shares_artist = exploded.isin(given_artists).groupby(level=0).any()
-different_artist = ~shares_artist
-similar = songs[different_artist].sort_values('distance').head(5)
+    if genre:
+        candidates &= pool['track_genre'] == genre
 
-print('\nSimilar songs:')
-print(similar[['track_name', 'artists', 'track_genre', 'popularity', 'distance']])
+    # Only songs by this artist
+    if artist:
+        by_artist = pool['artists'].str.split(';').explode().eq(artist).groupby(level=0).any()
+        if not by_artist.any():
+            raise ValueError(f'No songs found for artist {artist}')
+        candidates &= by_artist
+
+    if track_id:
+        rows = all_songs[all_songs['track_id'] == track_id]
+        if rows.empty:
+            raise ValueError(f'No song with track_id {track_id}')
+        given = rows.iloc[0]
+        target = scaler.transform(rows[features])[0]
+
+        # don't return the given song itself
+        candidates &= ~((pool['track_name'] == given['track_name']) & (pool['artists'] == given['artists']))
+
+        # exclude the given song's artists 
+        if not artist:
+            exclude_artists = set(given['artists'].split(';'))
+
+    elif targets:
+        unknown = set(targets) - set(features)
+        if unknown:
+            raise ValueError(f'Unknown feature(s): {unknown}. Choose from {features}')
+        cols = [features.index(f) for f in targets]
+        # convert each value to 0-1 scale
+        target = [(v - scaler.data_min_[c]) / scaler.data_range_[c]
+            for c, v in zip(cols, targets.values())]
+
+    # remove songs sharing any artist with the given song
+    if exclude_artists:
+        shares = pool['artists'].str.split(';').explode().isin(exclude_artists).groupby(level=0).any()
+        candidates &= ~shares
+
+    allowed = pool[candidates]
+
+    # random songs from whatever is allowed
+    if target is None:
+        return allowed.sample(frac=1).head(n)[info]
+
+    # otherwise: closest songs (smaller distance = more similar)
+    dist = ((X[:, cols] - target) ** 2).sum(axis=1) ** 0.5
+    allowed = allowed.assign(distance=dist[candidates.values])
+    return allowed.sort_values('distance').head(n)[info + ['distance']]
+
+
+# Examples
+print(recommend(n=2)) # random
+print("\n")             
+print(recommend(track_id='5SuOikwiRyPMVoIQDJUgSV', n=2)) # related to specific song
+print("\n")             
+print(recommend(artist='Drake', n=2)) # related songs to artist
+print("\n")             
+print(recommend(energy=0.9)) # same energy
+print("\n")             
+print(recommend(genre='jazz', n=1)) # same genre
