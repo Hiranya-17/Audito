@@ -66,21 +66,19 @@ def recommend(track_id=None, artist=None, genre=None, n=5, min_popularity=None, 
 
     # random songs from whatever is allowed
     if target is None:
-        return allowed.sample(frac=1).head(n)[info]
+        return allowed.sample(frac=1).head(n)['track_id'].tolist()
 
-    # otherwise: closest songs (smaller distance = more similar)
+    # closest songs
     dist = ((X[:, cols] - target) ** 2).sum(axis=1) ** 0.5
     allowed = allowed.assign(distance=dist[candidates.values])
-    return allowed.sort_values('distance').head(n)[info + ['distance']]
+    return allowed.sort_values('distance').head(n)['track_id'].tolist()
+
+
 
 
 # Examples
-print(recommend(n=2)) # random
-print("\n")             
-print(recommend(track_id='5SuOikwiRyPMVoIQDJUgSV', n=2)) # related to specific song
-print("\n")             
-print(recommend(artist='Drake', n=2)) # related songs to artist
-print("\n")             
-print(recommend(energy=0.9)) # same energy
-print("\n")             
-print(recommend(genre='jazz', n=1)) # same genre
+# print(recommend(n=2))                                       # random
+# print(recommend(track_id='5SuOikwiRyPMVoIQDJUgSV', n=2))  # related to specific song
+# print(recommend(artist='Drake', n=2))                     # related songs to artist
+# print(recommend(energy=0.9))                              # same energy
+# print(recommend(genre='jazz', n=1))                       # same genre
