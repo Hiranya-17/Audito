@@ -1,5 +1,5 @@
 import sampleAlbum from './assets/dummyAlbumCover.png'
-import logo from './assets/logos/logoWhiteFull.svg'
+import logo from './assets/logos/auditoLogo.svg'
 import { useEffect, useState } from 'react'
 
 function SongCard({ song }) {

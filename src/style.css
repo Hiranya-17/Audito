@@ -5,18 +5,18 @@ body {
 }
 
 .home {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 32px 24px;
 }
 
 .home h1 {
   margin: 0 0 8px;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .home > p {
-  margin: 0;
+  font-size: 15px;
   color: #afafaf;
 }
 
@@ -24,17 +24,17 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 24px;
 }
 
 .song-card {
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 20px;
 
-  height: 270px;
+  height: 160px;
   min-height: 0;
-  padding: 36px;
+  padding: 20px;
   background: #17171d;
   border: 1px solid #333;
   border-radius: 12px;
@@ -47,7 +47,7 @@ body {
   aspect-ratio: 1 / 1;
   flex-shrink: 0;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 .song-info {
@@ -57,20 +57,20 @@ body {
 }
 
 .song-info h2 {
-  margin: 0 0 6px;
-  font-size: 24px;
+  margin: 0 0 8px;
+  font-size: 21px;
   
 }
 .song-artist {
   margin: 0;
   color: #ababab;
-  font-size: 16x;
+  font-size: 15px;
   overflow-wrap: anywhere;
 }
 
 .song-rating {
   margin: 16px 0 0;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: bold;
 }
 .site-header {
@@ -134,12 +134,13 @@ body {
 }
 
 .navbar {
-  max-width: 1200px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 16px 24px;
-
+  padding: 0 0px 0px;
+  height: 110px;
+  width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
 }
@@ -147,20 +148,29 @@ body {
 .logo-link {
   display: flex;
   align-items: center;
+  height: 56px;
+  position: relative;
+  top: -24px;
 }
 
 .site-logo {
   display: block;
-  width: 160px;
+  width: 180px;
   height: auto;
 }
 
 .nav-link {
-  color: #202024;
+  color: #ffffff;
   text-decoration: none;
   font-weight: bold;
+  position: relative;
+  display: flex;
+  top: -10px;
+  height: 56px;
+  align-items: center;
 }
 
 .nav-link:hover {
-  color: #7650d4;
+  color: #0098ff;
+  text-decoration: underline;
 }
