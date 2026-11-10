@@ -12,6 +12,14 @@
 - Show trending mysic and recent reviews
 - Create lists or collections of favorite songs
 
+#### How to run the website locally
+- Install Node.js: https://nodejs.org/
+- Check it worked with `node -v` & `npm -v` in the terminal
+- Enter `npm install` in the terminal (first time, and whenever package.json changes)
+- Enter `npm run dev` in the terminal
+- A link should output similar to http://localhost:5173/
+- Copy the link into the browser to see website
+
 ### Tech Stack
 
 #### Frontend
