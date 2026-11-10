@@ -74,11 +74,9 @@ def recommend(track_id=None, artist=None, genre=None, n=5, min_popularity=None, 
     return allowed.sort_values('distance').head(n)['track_id'].tolist()
 
 
-
-
 # Examples
-# print(recommend(n=2))                                       # random
-# print(recommend(track_id='5SuOikwiRyPMVoIQDJUgSV', n=2))  # related to specific song
-# print(recommend(artist='Drake', n=2))                     # related songs to artist
+# print(recommend(n=2))                                     # random
+# print(recommend(track_id='5SuOikwiRyPMVoIQDJUgSV'))       # related to specific song
+# print(recommend(artist='Drake'))                          # related songs to artist
 # print(recommend(energy=0.9))                              # same energy
-# print(recommend(genre='jazz', n=1))                       # same genre
+# print(recommend(genre='jazz'))                            # same genre
