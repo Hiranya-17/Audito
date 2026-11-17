@@ -37,7 +37,6 @@ Audito is a music review platform where users rate and review songs, and get rec
 Check that everything is installed with `node -v`, `npm -v`, and `python3 --version`.
 
 ### One-time setup
-
 **Backend** (run from the `backend/` folder):
 1. `python3 -m venv .venv`
 2. `source .venv/bin/activate` (Windows: `.venv\Scripts\activate`)
@@ -49,19 +48,17 @@ Check that everything is installed with `node -v`, `npm -v`, and `python3 --vers
 Re-run `pip install -r requirements.txt` when `requirements.txt` changes, and `npm install` when `package.json` changes.
 
 ### Running the app
-
-You need **two terminals**, one for the backend and one for the frontend.
+You need **two terminals**, one for the backend and one for the frontend. 
+Run both from the **project root**.
 
 **Terminal 1: backend**
-1. `cd backend`
-2. `source .venv/bin/activate` (Windows: `.venv\Scripts\activate`)
-3. `python3 api.py`
+- Mac & Linux: `backend/.venv/bin/python backend/api.py`
+- Windows: `backend\.venv\Scripts\python.exe backend\api.py`
 
 The API runs at http://127.0.0.1:5000. The "development server" warning is normal.
 
 **Terminal 2: frontend**
-1. `cd frontend`
-2. `npm run dev`
+- All systems: `npm --prefix frontend run dev`
 
 Open the link it prints (usually http://localhost:5173/) in your browser.
 
