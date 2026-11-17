@@ -1,10 +1,14 @@
+from pathlib import Path
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
+
+# path relative to this file, so it works from any folder
+data_path = Path(__file__).parent / 'data' / 'songs.csv'
 
 features = ['danceability', 'energy', 'loudness', 'speechiness', 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo']
 info = ['track_id', 'track_name', 'artists', 'album_name', 'track_genre', 'popularity']
 
-all_songs = pd.read_csv('songs.csv', usecols=info + features)
+all_songs = pd.read_csv(data_path, usecols=info + features)
 
 # fit on every row so any track_id can be looked up
 scaler = MinMaxScaler().fit(all_songs[features])

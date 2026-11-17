@@ -1,33 +1,68 @@
-# Audito: Crowdsourced music critics 
+# Audito: Crowdsourced Music Critics
 
 #### GROUP-2-CSC
 
-### Features
-- Search songs, albums, and artists from a music database.
-- Connect to your favorite music streaming platform
-- Discover recently listened-to songs and playlists
+Audito is a music review platform where users rate and review songs, and get recommendations based on what they like.
+
+## Features
+- Song recommendations from the Kaggle Spotify Tracks dataset
+- Search songs, albums, and artists
 - Rate songs and albums
-- Review music with written reviews
+- Write reviews
 - Follow friends and influencers to see their opinions
-- Show trending mysic and recent reviews
-- Create lists or collections of favorite songs
+- Trending music and recent reviews
+- Lists and collections of favorite songs
+- Connect to a music streaming platform
 
-#### How to run the website locally
-- Install Node.js: https://nodejs.org/
-- Check it worked with `node -v` & `npm -v` in the terminal
-- Enter `npm install` in the terminal (first time, and whenever package.json changes)
-- Enter `npm run dev` in the terminal
-- A link should output similar to http://localhost:5173/
-- Copy the link into the browser to see website
 
-### Tech Stack
+## Tech Stack
+- **Frontend:** React + Vite (styling: CSS)
+- **Backend:** Flask (Python), with pandas and scikit-learn for recommendations
+- **Database:** MongoDB (setup: see [backend/database/README.md](backend/database/README.md))
 
-#### Frontend
-- React (for structure and logic)
-- Tailwind CSS (for styling)
 
-#### Backend
-- Django
+## Project Structure
+- `frontend/`: React app
+- `backend/`: Flask API (`api.py`), recommendation logic (`recommend.py`), and database code (`database/`)
+- `backend/data/`: dataset (`songs.csv`)
 
-#### Database
--MongoDB (setup: see [database/README.md](database/README.md))
+
+
+## Running the website locally
+### Prerequisites
+- Node.js (LTS): https://nodejs.org/
+- Python 3.10+
+- `songs.csv` (Kaggle Spotify Tracks dataset) placed at `backend/data/songs.csv`
+
+Check that everything is installed with `node -v`, `npm -v`, and `python3 --version`.
+
+### One-time setup
+
+**Backend** (run from the `backend/` folder):
+1. `python3 -m venv .venv`
+2. `source .venv/bin/activate` (Windows: `.venv\Scripts\activate`)
+3. `pip install -r requirements.txt`
+
+**Frontend** (run from the `frontend/` folder):
+1. `npm install`
+
+Re-run `pip install -r requirements.txt` when `requirements.txt` changes, and `npm install` when `package.json` changes.
+
+### Running the app
+
+You need **two terminals**, one for the backend and one for the frontend.
+
+**Terminal 1: backend**
+1. `cd backend`
+2. `source .venv/bin/activate` (Windows: `.venv\Scripts\activate`)
+3. `python3 api.py`
+
+The API runs at http://127.0.0.1:5000. The "development server" warning is normal.
+
+**Terminal 2: frontend**
+1. `cd frontend`
+2. `npm run dev`
+
+Open the link it prints (usually http://localhost:5173/) in your browser.
+
+To stop either server, press `Ctrl + C` in its terminal.

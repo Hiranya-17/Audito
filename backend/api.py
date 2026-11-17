@@ -1,5 +1,11 @@
 from flask import Flask, jsonify
 from recommend import recommend, all_songs
+from pathlib import Path
+import pandas as pd
+
+# Load the dataset
+data_path = Path("data/songs.csv")
+all_songs = pd.read_csv(data_path)
 
 app = Flask(__name__)
 
