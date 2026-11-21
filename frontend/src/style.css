@@ -1,8 +1,32 @@
+/*Gradient Style*/
+:root{
+  --brand-blue: #0074FF;
+  --brand-yellow: #F9B928;
+  --main-bg: #0B1018;
+  --primary-text: #F1F5FC;
+  --secondary-text: #A6B3C5;
+  --blue-text: #75B5FF;
+  --gradient-gray: #151C27;
+  --gradient-blue: #102747;
+  --gradient-amber: #322711;
+  --card-bg: #141C28;
+  --card-hover-bg: #1C293B;
+  --boarder: #2A374A;
+}
+
 /*Page Basic Style*/
 body {
-  margin: 0; font-family: Arial, sans-serif;
-  background: #0B1018;
+  margin: 0; 
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  background-color: #0B1018;
+  background-image: 
+    radial-gradient(ellipse at 65% 65%, var(--gradient-amber), transparent 45%),
+    radial-gradient(ellipse at 12% 0%, var(--gradient-blue), transparent 75%),
+    radial-gradient(ellipse at 55% 0%, var(--gradient-gray), transparent 40%)
+    ;
   color: #F1F5FC;
+  background-attachment: fixed;
 }
 
 /*Header*/
@@ -12,11 +36,13 @@ body {
 }
 
 .navbar {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0 0px 0px;
-  height: 110px;
+  box-sizing: border-box;
   width: 100%;
+  max-width: 850px;
+  margin-inline: auto;
+  height: 80px;
+  padding-inline: 24px;
+
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -28,12 +54,12 @@ body {
   align-items: center;
   height: 56px;
   position: relative;
-  top: -24px;
+  top: -10px;
 }
 
 .site-logo {
   display: block;
-  width: 180px;
+  width: 150px;
   height: auto;
 }
 
@@ -43,7 +69,7 @@ body {
   font-weight: bold;
   position: relative;
   display: flex;
-  top: -10px;
+  top: 0px;
   height: 56px;
   align-items: center;
 }
@@ -62,11 +88,11 @@ body {
 
 .home h1 {
   margin: 0 0 8px;
-  font-size: 28px;
+  font-size: 25px;
 }
 
 .home > p {
-  font-size: 15px;
+  font-size: 13px;
   color: #A6B3C5;
 }
 
@@ -83,11 +109,11 @@ body {
   align-items: center;
   gap: 20px;
 
-  height: 160px;
+  height: 140px;
   min-height: 0;
   padding: 20px;
   background: #141C28;
-  border: 1px solid #2A374A;
+  border: 0px solid #2A374A;
   border-radius: 12px;
 }
 
@@ -127,13 +153,15 @@ body {
 
 .song-genre {
   display: inline-block;
-  margin: 12px 0 0;
-  padding: 5px 12px;
-  background: #2A374A;
+  margin: 8px 0 0;
+  margin-inline-start: 8px;
+  padding: 3px 8px;
+  background: var(--card-hover-bg);
   color: #A6B3C5;
-  border-radius: 6px;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 0.9em;
   text-transform: capitalize;
+  font-weight: bold;
 }
 
 .song-stats {
@@ -158,6 +186,35 @@ body {
   color: #F9B928;
   font-size: 20px;
   font-weight: bold;
+}
+
+.song-title-link,
+.song-artist-link{
+  color: inherit;
+  text-decoration: none;
+  text-underline-offset: 4px;
+}
+
+a.song-genre {
+  margin: 0 0 0 8px;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.song-title-link:is(:hover, :focus-visible) {
+  color: var(--blue-text);
+  text-decoration: underline;
+}
+
+.song-artist-link:is(:hover, :focus-visible) {
+  color: var(--blue-text);
+  text-decoration: underline;
+}
+
+a.song-genre:is(:hover, :focus-visible) {
+  border: 1px solid var(--boarder);
+  background-color: var(--card-hover-bg);
+  color: var(--primary-text);
 }
 
 /*Mobile*/

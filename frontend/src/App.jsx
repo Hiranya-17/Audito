@@ -12,8 +12,21 @@ function SongCard({ song }) {
             />
 
             <div className="song-info">
-                <h2>{song.title}</h2>
-                <p className="song-artist">{song.artist}</p>
+                <h2>
+                    <a className="song-title-link" href={'/songs/${endureURIComponent(song.id)}'}>
+                        {song.title}
+                    </a>
+                </h2>
+                <p className="song-artist">
+                    <a className="song-artist-link" href={'/artists/${endureURIComponent(song.artist)}'}>
+                        {song.artist}
+                    </a>
+                    {song.genre && (
+                        <a className="song-genre" href={`/genres/${encodeURIComponent(song.genre)}`}>
+                            {song.genre}
+                        </a>
+                    )}
+                </p>
                 <p className="song-rating">Rating: {song.rating ?? "-"}</p>
             </div>
         </article>
@@ -62,11 +75,11 @@ export default function App() {
                     <a className="logo-link" href="/">
                         <img className="site-logo" src={logo} alt="Audito Home" />
                     </a>
-                    <a className="nav-link" href="/">Home</a>
+                    <a className="nav-link" href="/">HOME</a>
                 </nav>
             </header>
             <main className="home">
-                <h1>FOR YOU</h1>
+                <h1>RECOMMENDATION</h1>
                 <p>Recommended songs for you.</p>
 
                 {loading && <p>Loading recommendations...</p>}
