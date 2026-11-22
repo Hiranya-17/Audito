@@ -2,6 +2,20 @@ import sampleAlbum from './assets/albumCoverPH.svg'
 import logo from './assets/auditoMain.svg'
 import { useEffect, useState } from 'react'
 
+function MenuBar() {
+    return(
+        <header className="site-header">
+            <nav className="navbar" aria-label="Main Navigation">
+                <a className="logo-link" href="/">
+                    <img className="site-logo" src={logo} alt="Audito Home" />
+                </a>
+                <a className="nav-link" href="/">HOME</a>
+                <a className="nav-link account-link" href="/signin"> SIGN IN </a>
+            </nav>
+        </header>
+    )
+}
+
 function SongCard({ song }) {
     return (
         <article className="song-card">
@@ -33,7 +47,7 @@ function SongCard({ song }) {
     )
 }
 
-export default function App() {
+function Recommendations() {
     const [songs, setSongs] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
@@ -69,32 +83,61 @@ export default function App() {
     return () => controller.abort()
     }, [])
     return (
+        <main className="home">
+            <h1>RECOMMENDATION</h1>
+            <p>Recommended songs for you.</p>
+
+            {loading && <p>Loading recommendations...</p>}
+            {error && <p role="alert">{error}</p>}
+
+            {!loading && !error && songs.length === 0 && (
+            <p>No recommendations found.</p>
+            )}
+
+            <div className="song-grid">
+            {songs.map((song) => (
+                <SongCard key={song.id} song={song} />
+            ))}
+            </div>
+        </main>
+    )
+}
+
+function SignIn() {
+    return (
+        <main className="home">
+            <h1>Sign in to Audito</h1>
+            <button type="button" disabled>Continue with Google</button>
+            <button type="button" disabled>Continue with Apple</button>
+        </main>
+    )
+}
+
+function Profile() {
+    return (
+        <main className="home">
+            <h1>Profile Page</h1>
+            <p>Sign in to see your profile.</p>
+            <a href="/signin">Sign in</a>
+        </main>
+    )
+}
+
+/*Actual Page Calling*/
+export default function App() {
+    const path = window.location.pathname
+    let page = <Recommendations />
+
+    if (path === '/signin') {
+        page = <SignIn />
+    } else if (path === '/profile') {
+        page = <Profile />
+    }
+
+    return (
         <>
-            <header className="site-header">
-                <nav className="navbar" aria-label="Main Navigation">
-                    <a className="logo-link" href="/">
-                        <img className="site-logo" src={logo} alt="Audito Home" />
-                    </a>
-                    <a className="nav-link" href="/">HOME</a>
-                </nav>
-            </header>
-            <main className="home">
-                <h1>RECOMMENDATION</h1>
-                <p>Recommended songs for you.</p>
-
-                {loading && <p>Loading recommendations...</p>}
-                {error && <p role="alert">{error}</p>}
-
-                {!loading && !error && songs.length === 0 && (
-                <p>No recommendations found.</p>
-                )}
-
-                <div className="song-grid">
-                {songs.map((song) => (
-                    <SongCard key={song.id} song={song} />
-                ))}
-                </div>
-            </main>
+            <MenuBar />
+            {page}
         </>
     )
 }
