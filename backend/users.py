@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 import hashlib
 import os
-from Mongo import users_collection
+from backend.Mongo import users_collection
 from pymongo.errors import DuplicateKeyError
 
 def create_user(username, email, plain_password):
